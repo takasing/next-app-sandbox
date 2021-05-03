@@ -23,6 +23,7 @@ const Drawer: React.FC<Props> = ({ open, onClose, className, children }) => {
     ({ state }) => `
     height: 100%;
     padding: 32px 0 32px 32px;
+    transition: 300ms ease-in-out;
     transform: translateX(
         ${state === 'entering' || state === 'entered' ? '0%' : '100%'}
     );
