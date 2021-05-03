@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Drawer from '../components/Drawer'
 import { Footer } from '../projects/Footer'
 import { Grids } from '../projects/Grids'
+import { Header } from '../projects/Header'
 
 export const Home = (): JSX.Element => {
   const [open, setOpen] = useState(false)
@@ -24,6 +25,9 @@ export const Home = (): JSX.Element => {
           `}
         />
       </DrawerMenu>
+
+      <Header />
+
       <main>
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
