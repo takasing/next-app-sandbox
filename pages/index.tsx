@@ -1,4 +1,5 @@
 import { css } from '@emotion/css'
+import styled from '@emotion/styled'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -13,23 +14,15 @@ export const Home = (): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
-        className={css`
-          position: fixed;
-          top: 0;
-          right: 0;
-          height: 100%;
-          width: 400px;
-        `}
-      >
+      <DrawerMenu>
         <Drawer
           open={open}
           onClose={() => setOpen(false)}
           className={css`
             background-color: white;
           `}
-        ></Drawer>
-      </div>
+        />
+      </DrawerMenu>
       <main>
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -239,4 +232,11 @@ export const Home = (): JSX.Element => {
   )
 }
 
+const DrawerMenu = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 400px;
+`
 export default Home

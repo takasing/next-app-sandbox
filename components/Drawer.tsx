@@ -1,4 +1,3 @@
-import { css } from '@emotion/css'
 import styled from '@emotion/styled'
 import { Transition, TransitionStatus } from 'react-transition-group'
 
@@ -11,19 +10,26 @@ type Props = {
   onClose: () => void
   className?: string
 }
-/**
- * Drawerコンポーネント
- * Drawer内のbackground color, font color(border-color)を指定したい場合はclassNameに指定すると継承される
- * @param param0
- * @returns
- */
 const Drawer: React.FC<Props> = ({ open, onClose, className, children }) => {
-  // styledでpropsを受け取る
-  const DrawerRoot = styled.div<{ state: TransitionStatus }>(
-    ({ state }) => `
+  return (
+    <Transition in={open} timeout={300}>
+      {(state) => (
+        <DrawerRoot state={state} className={className}>
+          <DrawerControl onClick={onClose}>
+            <DrawerButton>close</DrawerButton>
+          </DrawerControl>
+          {children}
+        </DrawerRoot>
+      )}
+    </Transition>
+  )
+}
+
+const DrawerRoot = styled.div<{ state: TransitionStatus }>(
+  ({ state }) => `
     height: 100%;
     padding: 32px 0 32px 32px;
-    transition: 300ms ease-in-out;
+    transition: 0.3s ease-in-out;
     transform: translateX(
         ${state === 'entering' || state === 'entered' ? '0%' : '100%'}
     );
@@ -33,35 +39,17 @@ const Drawer: React.FC<Props> = ({ open, onClose, className, children }) => {
           ? SHADOW
           : 'none'
       };
-    ${className};
   `
-  )
-  return (
-    <Transition in={open} timeout={300}>
-      {(state) => (
-        <DrawerRoot state={state}>
-          <div
-            className={css`
-              display: flex;
-              flex-direction: row-reverse;
-              margin-right: 24px;
-            `}
-            onClick={onClose}
-          >
-            <div
-              className={css`
-                cursor: pointer;
-                border-bottom: 1px solid;
-              `}
-            >
-              close
-            </div>
-          </div>
-          {children}
-        </DrawerRoot>
-      )}
-    </Transition>
-  )
-}
+)
+
+const DrawerControl = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 24px;
+`
+const DrawerButton = styled.div`
+  cursor: pointer;
+  border-bottom: 1px solid;
+`
 
 export default Drawer
