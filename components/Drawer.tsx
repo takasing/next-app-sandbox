@@ -6,11 +6,26 @@ const defaultStyle = {
   transform: `translateX(100%)`,
 }
 
+const SHADOW = `0px 8px 10px -5px rgb(0 0 0 / 20%),
+            0px 16px 24px 2px rgb(0 0 0 / 14%),
+            0px 6px 30px 5px rgb(0 0 0 / 12%)`
 const transitionStyles = {
-  entering: { transform: `translateX(0%)` },
-  entered: { transform: `translateX(0%)` },
-  exiting: { transform: `translateX(100%)` },
-  exited: { transform: `translateX(100%)` },
+  entering: {
+    transform: `translateX(0%)`,
+    boxShadow: SHADOW,
+  },
+  entered: {
+    transform: `translateX(0%)`,
+    boxShadow: SHADOW,
+  },
+  exiting: {
+    transform: `translateX(100%)`,
+    boxShadow: SHADOW,
+  },
+  exited: {
+    transform: `translateX(100%)`,
+    boxShadow: 'none',
+  },
 }
 
 type Props = {

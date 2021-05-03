@@ -20,10 +20,6 @@ export const Home = (): JSX.Element => {
           right: 0;
           height: 100%;
           width: 400px;
-          ${open &&
-          `box-shadow: 0px 8px 10px -5px rgb(0 0 0 / 20%),
-            0px 16px 24px 2px rgb(0 0 0 / 14%),
-            0px 6px 30px 5px rgb(0 0 0 / 12%);`}
         `}
       >
         <Drawer
