@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Vercel from '../components/icons/vercel.svg'
 export const Footer = () => {
   return (
     <>
@@ -8,13 +8,7 @@ export const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <Image
-            src="/vercel.svg"
-            alt="Vercel Logo"
-            height={'32'}
-            width={'64'}
-          />
+          Powered by <Vercel style={{ transform: 'scale(0.3)' }} />
         </a>
       </footer>
       <style jsx>
