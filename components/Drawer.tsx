@@ -1,32 +1,10 @@
 import { css } from '@emotion/css'
-import { Transition } from 'react-transition-group'
-
-const defaultStyle = {
-  transition: `transform 300ms ease-in-out`,
-  transform: `translateX(100%)`,
-}
+import styled from '@emotion/styled'
+import { Transition, TransitionStatus } from 'react-transition-group'
 
 const SHADOW = `0px 8px 10px -5px rgb(0 0 0 / 20%),
             0px 16px 24px 2px rgb(0 0 0 / 14%),
             0px 6px 30px 5px rgb(0 0 0 / 12%)`
-const transitionStyles = {
-  entering: {
-    transform: `translateX(0%)`,
-    boxShadow: SHADOW,
-  },
-  entered: {
-    transform: `translateX(0%)`,
-    boxShadow: SHADOW,
-  },
-  exiting: {
-    transform: `translateX(100%)`,
-    boxShadow: SHADOW,
-  },
-  exited: {
-    transform: `translateX(100%)`,
-    boxShadow: 'none',
-  },
-}
 
 type Props = {
   open: boolean
@@ -39,41 +17,50 @@ type Props = {
  * @param param0
  * @returns
  */
-const Drawer: React.FC<Props> = ({ open, onClose, className, children }) => (
-  <Transition in={open} timeout={300}>
-    {(state) => (
-      <div
-        style={{
-          ...defaultStyle,
-          ...transitionStyles[state],
-        }}
-        className={css`
-          ${className};
-          height: 100%;
-          padding: 32px 0 32px 32px;
-        `}
-      >
-        <div
-          className={css`
-            display: flex;
-            flex-direction: row-reverse;
-            margin-right: 24px;
-          `}
-          onClick={onClose}
-        >
+const Drawer: React.FC<Props> = ({ open, onClose, className, children }) => {
+  // styledでpropsを受け取る
+  const DrawerRoot = styled.div<{ state: TransitionStatus }>(
+    ({ state }) => `
+    height: 100%;
+    padding: 32px 0 32px 32px;
+    transform: translateX(
+        ${state === 'entering' || state === 'entered' ? '0%' : '100%'}
+    );
+    box-shadow: 
+      ${
+        state === 'entering' || state === 'entered' || state === 'exiting'
+          ? SHADOW
+          : 'none'
+      };
+    ${className};
+  `
+  )
+  return (
+    <Transition in={open} timeout={300}>
+      {(state) => (
+        <DrawerRoot state={state}>
           <div
             className={css`
-              cursor: pointer;
-              border-bottom: 1px solid;
+              display: flex;
+              flex-direction: row-reverse;
+              margin-right: 24px;
             `}
+            onClick={onClose}
           >
-            close
+            <div
+              className={css`
+                cursor: pointer;
+                border-bottom: 1px solid;
+              `}
+            >
+              close
+            </div>
           </div>
-        </div>
-        {children}
-      </div>
-    )}
-  </Transition>
-)
+          {children}
+        </DrawerRoot>
+      )}
+    </Transition>
+  )
+}
 
 export default Drawer
